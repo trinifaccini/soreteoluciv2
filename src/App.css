@@ -746,3 +746,68 @@ h1 {
 .preview-close:hover {
   background: rgba(0, 0, 0, 0.8);
 }
+
+.admin-container {
+  padding: 30px;
+}
+
+.admin-toolbar {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+.admin-input {
+  padding: 6px 8px;
+}
+
+.admin-button {
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.admin-error {
+  color: red;
+}
+
+.admin-pagination {
+  margin-bottom: 15px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.admin-table-container {
+  max-height: 65vh;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.admin-table thead {
+  position: sticky;
+  top: 0;
+  background: #f3f4f6;
+}
+
+.admin-email {
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
