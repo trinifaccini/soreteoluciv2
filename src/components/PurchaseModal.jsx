@@ -142,7 +142,7 @@ export default function PurchaseModal({ number, sessionId, onClose, onCancel, on
         <h2>Número {number}</h2>
         <h3>Valor $10.000</h3>
       
-        <h5>Transferí al alias: lucia.ferrari27</h5>
+        <h5>Transferí al alias: luchi.ferrari27</h5>
 
         <div className="reservation-timer">
           <span>
