@@ -25,11 +25,13 @@ export default function Welcome() {
         <h3>¿Cómo participar?</h3>
 
         <ol>
-          <li>Elegí tu número</li>
+          <li>Elegí tu número.  </li>
           <li>Hacé la transferencia de $10.000 al alias <strong>lucia.ferrari27</strong></li>
           <li>Subí tu comprobante</li>
           <li>Recibí la confirmación por email :) </li>
         </ol>
+
+        <p className="disclaimer" style={{ marginBottom: '16px', color: '#e0e0e072' }}>Tené en cuenta que al seleccionar un número, va a quedar reservado hasta completar el pago.</p>
 
         <button
           className="welcome-button"
