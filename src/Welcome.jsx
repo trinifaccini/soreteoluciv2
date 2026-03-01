@@ -26,7 +26,7 @@ export default function Welcome() {
 
         <ol>
           <li>Elegí tu número</li>
-          <li>Hacé la transferencia al alias <strong>lucia.ferrari27</strong></li>
+          <li>Hacé la transferencia de $10.000 al alias <strong>lucia.ferrari27</strong></li>
           <li>Subí tu comprobante</li>
           <li>Recibí la confirmación por email :) </li>
         </ol>
