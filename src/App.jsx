@@ -100,7 +100,9 @@ function Home() {
 
   return (
     <div className="app">
-      <h1>Elegí tu número</h1>
+      <div className='titulo'>
+        <h1>Elegí tu numero</h1>
+      </div>
 
       <div className="container">
         <NumberBoard
