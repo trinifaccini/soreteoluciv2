@@ -140,7 +140,7 @@ export default function PurchaseModal({ number, sessionId, onClose, onCancel, on
     <div className="modal-backdrop">
       <div className="modal">
         <h2>Número {number}</h2>
-        <h2>Valor $10.000</h2>
+        <h3>Valor $10.000</h3>
       
         <h5>Transferí al alias: lucia.ferrari27</h5>
 
