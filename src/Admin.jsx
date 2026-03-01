@@ -1,17 +1,5 @@
 import { useState } from 'react'
 
-const thStyle = {
-  textAlign: 'left',
-  padding: '8px 10px',
-  borderBottom: '1px solid #ddd',
-  fontWeight: 600
-}
-
-const tdStyle = {
-  padding: '6px 10px',
-  borderBottom: '1px solid #eee'
-}
-
 export default function Admin() {
   const [password, setPassword] = useState('')
   const [numbers, setNumbers] = useState(null)
@@ -65,113 +53,30 @@ export default function Admin() {
     document.body.removeChild(link)
   }
 
+  // LOGIN
   if (!numbers) {
     return (
-  <div style={{ padding: 30 }}>
-    <h2 style={{ marginBottom: 10 }}>Panel Interno</h2>
+      <div className="admin-container">
+        <h2>Panel Interno</h2>
 
-    <div style={{ display: 'flex', gap: 20, alignItems: 'center', flexWrap: 'wrap' }}>
-      <p style={{ margin: 0 }}>
-        <strong>Total vendidos:</strong> {vendidos.length}
-      </p>
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="admin-input"
+        />
 
-      <button onClick={exportCSV}>
-        Exportar CSV
-      </button>
-
-      <input
-        type="text"
-        placeholder="Filtrar por email..."
-        value={emailFilter}
-        onChange={(e) => {
-          setEmailFilter(e.target.value)
-          setCurrentPage(1)
-        }}
-        style={{ padding: 6 }}
-      />
-    </div>
-
-    {/* Paginación */}
-    {totalPages > 1 && (
-      <div style={{ margin: '15px 0' }}>
-        <button
-          disabled={currentPage === 1}
-          onClick={() => setCurrentPage(prev => prev - 1)}
-        >
-          ←
+        <button onClick={login} className="admin-button">
+          Entrar
         </button>
 
-        <span style={{ margin: '0 10px' }}>
-          {currentPage} / {totalPages}
-        </span>
-
-        <button
-          disabled={currentPage === totalPages}
-          onClick={() => setCurrentPage(prev => prev + 1)}
-        >
-          →
-        </button>
+        {error && <p className="admin-error">{error}</p>}
       </div>
-    )}
-
-    {/* Tabla compacta */}
-    <div style={{
-      maxHeight: '65vh',
-      overflowY: 'auto',
-      border: '1px solid #ddd',
-      borderRadius: 8
-    }}>
-      <table style={{
-        width: '100%',
-        borderCollapse: 'collapse',
-        fontSize: 14
-      }}>
-        <thead style={{ background: '#f3f4f6', position: 'sticky', top: 0 }}>
-          <tr>
-            <th style={thStyle}>#</th>
-            <th style={thStyle}>Nombre</th>
-            <th style={thStyle}>Email</th>
-            <th style={thStyle}>📎</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {paginatedVendidos.map(([num, data]) => (
-            <tr key={num}>
-              <td style={tdStyle}>{num}</td>
-              <td style={tdStyle}>{data.name}</td>
-              <td style={tdStyle}>
-                {data.email?.length > 25
-                  ? data.email.slice(0, 25) + '...'
-                  : data.email}
-              </td>
-              <td style={tdStyle}>
-                {data.proofKey ? (
-                  <a
-                    href={`/.netlify/functions/download?key=${data.proofKey}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Ver
-                  </a>
-                ) : '-'}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-
-    {vendidos.length === 0 && (
-      <p style={{ marginTop: 20 }}>
-        No hay resultados para ese filtro.
-      </p>
-    )}
-  </div>
-)
+    )
   }
 
-  // Filtrar por email
+  // FILTRO
   const vendidos = Object.entries(numbers)
     .filter(([_, data]) => data.status === 'taken')
     .filter(([_, data]) =>
@@ -187,40 +92,39 @@ export default function Admin() {
   )
 
   return (
-    <div style={{ padding: 40 }}>
+    <div className="admin-container">
       <h2>Panel Interno</h2>
 
-      <p><strong>Total vendidos:</strong> {vendidos.length}</p>
+      <div className="admin-toolbar">
+        <strong>Total vendidos: {vendidos.length}</strong>
 
-      <button onClick={exportCSV} style={{ marginBottom: 20 }}>
-        Exportar CSV
-      </button>
+        <button onClick={exportCSV} className="admin-button">
+          Exportar CSV
+        </button>
 
-      {/* Filtro por email */}
-      <div style={{ marginBottom: 20 }}>
         <input
           type="text"
           placeholder="Filtrar por email..."
           value={emailFilter}
           onChange={(e) => {
             setEmailFilter(e.target.value)
-            setCurrentPage(1) // vuelve a página 1 al filtrar
+            setCurrentPage(1)
           }}
-          style={{ padding: 6, width: 250 }}
+          className="admin-input"
         />
       </div>
 
-      {/* Paginación */}
+      {/* PAGINACIÓN */}
       {totalPages > 1 && (
-        <div style={{ marginBottom: 20 }}>
+        <div className="admin-pagination">
           <button
             disabled={currentPage === 1}
             onClick={() => setCurrentPage(prev => prev - 1)}
           >
-            ← Anterior
+            ←
           </button>
 
-          <span style={{ margin: '0 10px' }}>
+          <span>
             Página {currentPage} de {totalPages}
           </span>
 
@@ -228,28 +132,51 @@ export default function Admin() {
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage(prev => prev + 1)}
           >
-            Siguiente →
+            →
           </button>
         </div>
       )}
 
-      {paginatedVendidos.map(([num, data]) => (
-        <div key={num} style={{ borderBottom: '1px solid #ddd', padding: 10 }}>
-          <p><strong>Número:</strong> {num}</p>
-          <p><strong>Nombre:</strong> {data.name}</p>
-          <p><strong>Email:</strong> {data.email}</p>
+      {/* TABLA COMPACTA */}
+      <div className="admin-table-container">
+        <table className="admin-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>📎</th>
+            </tr>
+          </thead>
 
-          {data.proofKey && (
-            <a
-              href={`/.netlify/functions/download?key=${data.proofKey}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Comprobante
-            </a>
-          )}
-        </div>
-      ))}
+          <tbody>
+            {paginatedVendidos.map(([num, data]) => (
+              <tr key={num}>
+                <td>{num}</td>
+                <td>{data.name}</td>
+                <td className="admin-email">
+                  {data.email?.length > 28
+                    ? data.email.slice(0, 28) + '...'
+                    : data.email}
+                </td>
+                <td>
+                  {data.proofKey ? (
+                    <a
+                      href={`/.netlify/functions/download?key=${data.proofKey}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Ver
+                    </a>
+                  ) : (
+                    '-'
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {vendidos.length === 0 && (
         <p>No hay resultados para ese filtro.</p>
