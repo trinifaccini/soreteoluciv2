@@ -1,5 +1,17 @@
 import { useState } from 'react'
 
+const thStyle = {
+  textAlign: 'left',
+  padding: '8px 10px',
+  borderBottom: '1px solid #ddd',
+  fontWeight: 600
+}
+
+const tdStyle = {
+  padding: '6px 10px',
+  borderBottom: '1px solid #eee'
+}
+
 export default function Admin() {
   const [password, setPassword] = useState('')
   const [numbers, setNumbers] = useState(null)
@@ -55,21 +67,108 @@ export default function Admin() {
 
   if (!numbers) {
     return (
-      <div style={{ padding: 40 }}>
-        <h2>Panel Interno</h2>
+  <div style={{ padding: 30 }}>
+    <h2 style={{ marginBottom: 10 }}>Panel Interno</h2>
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+    <div style={{ display: 'flex', gap: 20, alignItems: 'center', flexWrap: 'wrap' }}>
+      <p style={{ margin: 0 }}>
+        <strong>Total vendidos:</strong> {vendidos.length}
+      </p>
 
-        <button onClick={login}>Entrar</button>
+      <button onClick={exportCSV}>
+        Exportar CSV
+      </button>
 
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+      <input
+        type="text"
+        placeholder="Filtrar por email..."
+        value={emailFilter}
+        onChange={(e) => {
+          setEmailFilter(e.target.value)
+          setCurrentPage(1)
+        }}
+        style={{ padding: 6 }}
+      />
+    </div>
+
+    {/* Paginación */}
+    {totalPages > 1 && (
+      <div style={{ margin: '15px 0' }}>
+        <button
+          disabled={currentPage === 1}
+          onClick={() => setCurrentPage(prev => prev - 1)}
+        >
+          ←
+        </button>
+
+        <span style={{ margin: '0 10px' }}>
+          {currentPage} / {totalPages}
+        </span>
+
+        <button
+          disabled={currentPage === totalPages}
+          onClick={() => setCurrentPage(prev => prev + 1)}
+        >
+          →
+        </button>
       </div>
-    )
+    )}
+
+    {/* Tabla compacta */}
+    <div style={{
+      maxHeight: '65vh',
+      overflowY: 'auto',
+      border: '1px solid #ddd',
+      borderRadius: 8
+    }}>
+      <table style={{
+        width: '100%',
+        borderCollapse: 'collapse',
+        fontSize: 14
+      }}>
+        <thead style={{ background: '#f3f4f6', position: 'sticky', top: 0 }}>
+          <tr>
+            <th style={thStyle}>#</th>
+            <th style={thStyle}>Nombre</th>
+            <th style={thStyle}>Email</th>
+            <th style={thStyle}>📎</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {paginatedVendidos.map(([num, data]) => (
+            <tr key={num}>
+              <td style={tdStyle}>{num}</td>
+              <td style={tdStyle}>{data.name}</td>
+              <td style={tdStyle}>
+                {data.email?.length > 25
+                  ? data.email.slice(0, 25) + '...'
+                  : data.email}
+              </td>
+              <td style={tdStyle}>
+                {data.proofKey ? (
+                  <a
+                    href={`/.netlify/functions/download?key=${data.proofKey}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Ver
+                  </a>
+                ) : '-'}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    {vendidos.length === 0 && (
+      <p style={{ marginTop: 20 }}>
+        No hay resultados para ese filtro.
+      </p>
+    )}
+  </div>
+)
   }
 
   // Filtrar por email
