@@ -99,7 +99,7 @@ export default async (req) => {
     try {
       await resend.emails.send({
         from: 'Rifa <onboarding@resend.dev>',
-        to: trinidadfaccini01@gmail.com,
+        to: 'trinidadfaccini01@gmail.com',
         subject: `¡Confirmación de tu número ${number}!`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px;">
@@ -114,7 +114,7 @@ export default async (req) => {
               <h1 style="margin:10px 0;font-size:48px;">${number}</h1>
             </div>
 
-            <p>Te avisaremos cuando se realice el sorteo 🍀</p>
+            <p>Te vamos a avisar cuando se realice el sorteo 🍀</p>
           </div>
         `
       })
