@@ -24,8 +24,8 @@ export default function Welcome() {
 
         <h3>¿Cómo participar?</h3>
 
-        <ol>
-          <li>Elegí tu número.  </li>
+        <ol>d
+          <li>Elegí tu número 🎟️ (del 1 al 1000!)  </li>
           <li>Hacé la transferencia de $10.000 al alias <strong>luchi.ferrari27</strong></li>
           <li>Subí tu comprobante</li>
           <li>Recibí la confirmación por email :) </li>
