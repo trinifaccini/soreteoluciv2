@@ -812,3 +812,7 @@ h1 {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.titulo {
+  margin-bottom: 32px;
+}
